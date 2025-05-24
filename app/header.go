@@ -2,20 +2,6 @@ package main
 
 import "encoding/binary"
 
-type DNSMessage struct {
-	Header DNSHeader
-}
-
-func NewDNSMessage() *DNSMessage {
-	return &DNSMessage{
-		Header: *NewDNSHeader(),
-	}
-}
-
-func (message *DNSMessage) ToBytes() []byte {
-	return message.Header.ToBytes()
-}
-
 type DNSHeader struct {
 	Id                    uint16
 	QRIndicator           bool
