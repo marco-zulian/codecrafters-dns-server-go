@@ -14,6 +14,7 @@ func NewDNSMessage() *DNSMessage {
 func (message *DNSMessage) ToBytes() []byte {
 	var buf []byte
 
+	message.Header.QuestionCount += uint16(len(message.QuestionSection.Questions))
 	buf = append(buf, message.Header.ToBytes()...)
 	buf = append(buf, message.QuestionSection.ToBytes()...)
 
