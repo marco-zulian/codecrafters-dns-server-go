@@ -7,7 +7,8 @@ type DNSMessage struct {
 
 func NewDNSMessage() *DNSMessage {
 	return &DNSMessage{
-		Header: *NewDNSHeader(),
+		Header:          *NewDNSHeader(),
+		QuestionSection: *NewQuestionSection(),
 	}
 }
 
