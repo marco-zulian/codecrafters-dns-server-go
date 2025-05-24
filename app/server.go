@@ -57,14 +57,14 @@ func (s *DNSServer) serve() {
 			break
 		}
 
-		receivedData := string(buf[:size])
+		receivedData := buf[:size]
 		fmt.Printf("Received %d bytes from %s: %s\n", size, source, receivedData)
 
 		go s.handleMessage(receivedData, source)
 	}
 }
 
-func (s *DNSServer) handleMessage(data string, source *net.UDPAddr) {
+func (s *DNSServer) handleMessage(data []byte, source *net.UDPAddr) {
 	header := s.parseHeader([]byte(data[:12]))
 	response := NewDNSMessage(*header)
 
