@@ -49,6 +49,7 @@ func (record *ResourceRecord) ToBytes() []byte {
 		buf = append(buf, byte(len(name)))
 		buf = append(buf, []byte(name)...)
 	}
+	buf = append(buf, 0)
 
 	tmp := make([]byte, 12)
 	binary.BigEndian.PutUint16(tmp[0:2], record.Type)
