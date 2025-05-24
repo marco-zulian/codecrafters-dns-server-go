@@ -6,9 +6,9 @@ type DNSMessage struct {
 	AnswerSection   AnswerSection
 }
 
-func NewDNSMessage() *DNSMessage {
+func NewDNSMessage(header DNSHeader) *DNSMessage {
 	return &DNSMessage{
-		Header:          *NewDNSHeader(),
+		Header:          header,
 		QuestionSection: *NewQuestionSection(),
 		AnswerSection:   *NewAnswerSection(),
 	}

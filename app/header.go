@@ -18,21 +18,83 @@ type DNSHeader struct {
 	AdditionalRecordCount uint16
 }
 
-func NewDNSHeader() *DNSHeader {
-	return &DNSHeader{
-		Id:                    1234,
-		QRIndicator:           true,
-		Opcode:                0,
-		AuthoritativeAnswer:   false,
-		Truncation:            false,
-		RecursionDesired:      false,
-		RecursionAvailable:    false,
-		DNSSecQueries:         0,
-		ResponseCode:          0,
-		QuestionCount:         0,
-		AnswerRecordCount:     0,
-		AuthorityRecordCount:  0,
-		AdditionalRecordCount: 0,
+type Option func(*DNSHeader)
+
+func NewDNSHeader(opts ...Option) *DNSHeader {
+	header := &DNSHeader{
+		QRIndicator: true,
+	}
+
+	for _, opt := range opts {
+		opt(header)
+	}
+
+	return header
+}
+
+func WithId(id uint16) Option {
+	return func(d *DNSHeader) {
+		d.Id = id
+	}
+}
+
+func WithOpcode(code uint16) Option {
+	return func(d *DNSHeader) {
+		d.Opcode = code
+	}
+}
+
+func AsAuthoritativeAnswer() Option {
+	return func(d *DNSHeader) {
+		d.AuthoritativeAnswer = true
+	}
+}
+
+func Truncated() Option {
+	return func(d *DNSHeader) {
+		d.Truncation = true
+	}
+}
+
+func WithRecursionDesired() Option {
+	return func(d *DNSHeader) {
+		d.RecursionDesired = true
+	}
+}
+
+func WithRecursionAvailable() Option {
+	return func(d *DNSHeader) {
+		d.RecursionAvailable = true
+	}
+}
+
+func WithResponseCode(code uint16) Option {
+	return func(d *DNSHeader) {
+		d.ResponseCode = code
+	}
+}
+
+func WithQuestionCount(count uint16) Option {
+	return func(d *DNSHeader) {
+		d.QuestionCount = count
+	}
+}
+
+func WithAnswerRecordCount(count uint16) Option {
+	return func(d *DNSHeader) {
+		d.AnswerRecordCount = count
+	}
+}
+
+func WithAuthorityRecordCount(count uint16) Option {
+	return func(d *DNSHeader) {
+		d.AuthorityRecordCount = count
+	}
+}
+
+func WithAdditionalRecordCount(count uint16) Option {
+	return func(d *DNSHeader) {
+		d.AdditionalRecordCount = count
 	}
 }
 
